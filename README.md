@@ -12,6 +12,7 @@ Custodian is a business application implemented in the Event-Driven Development 
 - Business Domain: ??? - ✨ should be applicable for small or single person enterprises!
 - Sagas and more 😉 - our first-class citizen!
 - Cloud-Native 🚀 or even 😄 Browser-Tab-Native! 🧐
+- We like Baseball ⚾ through: [Data Consistency Explained Through Baseball, Doug Terry](https://youtu.be/gluIh8zd26I) 
 
 
 
