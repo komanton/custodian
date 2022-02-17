@@ -1,6 +1,6 @@
 @startuml
 participant "Web Browser" as WebBrowser
-participant "Gateway (WS/SSE)" as Gateway
+participant "Observable\nGateway (WS/SSE)" as Gateway
 participant "Message Broker" as MessageBus
 box "Microservice" #LightBlue
 participant "Handler" as Handler
