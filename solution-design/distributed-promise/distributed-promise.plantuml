@@ -1,23 +1,54 @@
 @startuml
+participant "Web Browser" as WebBrowser
+participant "Gateway (WS/SSE)" as Gateway
+participant "Message Broker" as MessageBus
+box "Microservice" #LightBlue
+participant "Handler" as Handler
+end box
 
-title "Comments - Sequence Diagram"
+== Init ==
 
-'This is a single line comment
+WebBrowser  ->>  Gateway: Send message
+note right WebBrowser: ex: 'get company by id'
+Gateway ->> MessageBus: Enqueue message
 
-/'
-This is a multi-
-line comment
-'/
+hnote across: "pending"
 
-actor User
-boundary "Web GUI" as GUI
-control "Shopping Cart" as SC
-entity Widget
-database Widgets
+alt#Gold #LightGreen Fillfill
 
-User -> GUI : To boundary
-GUI -> SC : To control
-SC -> Widget : To entity
-Widget -> Widgets : To database
+'== Fullfill ==
+
+MessageBus -> Handler: Consume message
+activate Handler
+Handler --> Handler
+note over Handler: Bussiness logic here
+Handler ->] : request
+note right Handler: synchronous\ncall to external\nsystem 
+Handler <--] : response
+MessageBus <-- Handler : Enqueue message
+deactivate Handler
+Gateway <<- MessageBus
+WebBrowser <<- Gateway
+
+hnote across: "fulfilled"
+
+else #Pink Reject
+
+'== Reject ==
+
+MessageBus -> Handler: Consume message
+activate Handler
+Handler --> Handler
+Handler ->] : request
+Handler <--] : error
+Handler -> Handler: catch 
+MessageBus <-- Handler : Enqueue message
+deactivate Handler
+Gateway <<- MessageBus
+WebBrowser <<- Gateway
+
+hnote across: "rejected"
+
+end
 
 @enduml
