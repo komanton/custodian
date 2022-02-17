@@ -14,6 +14,8 @@ Gateway ->> MessageBus: Enqueue message
 
 hnote across: "pending"
 
+== Settled ==
+
 alt#Gold #LightGreen Fillfill
 
 '== Fullfill ==
