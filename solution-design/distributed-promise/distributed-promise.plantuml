@@ -1,6 +1,6 @@
 @startuml
-participant "Web Browser" as WebBrowser
-participant "Observable\nGateway (WS/SSE)" as Gateway
+participant "Client" as Client
+participant "Observable\nGateway" as Gateway
 participant "Message Broker" as MessageBus
 box "Microservice" #LightBlue
 participant "Handler" as Handler
@@ -8,8 +8,8 @@ end box
 
 == Init ==
 
-WebBrowser  ->>  Gateway: Send message
-note right WebBrowser: ex: 'get company by id'
+Client->>  Gateway: Send message
+note right Client: ex: 'get company by id'
 Gateway ->> MessageBus: Enqueue message
 
 hnote across: "pending"
@@ -30,7 +30,7 @@ Handler <--] : response
 MessageBus <-- Handler : Enqueue message
 deactivate Handler
 Gateway <<- MessageBus
-WebBrowser <<- Gateway
+Client<<- Gateway
 
 hnote across: "fulfilled"
 
@@ -47,7 +47,7 @@ Handler -> Handler: catch
 MessageBus <-- Handler : Enqueue message
 deactivate Handler
 Gateway <<- MessageBus
-WebBrowser <<- Gateway
+Client<<- Gateway
 
 hnote across: "rejected"
 
